@@ -1,4 +1,4 @@
-global using ImGuiNET;
+global using Dalamud.Bindings.ImGui;
 global using System;
 global using System.Linq;
 global using System.Numerics;
