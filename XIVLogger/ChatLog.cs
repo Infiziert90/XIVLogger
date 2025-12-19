@@ -195,7 +195,7 @@ public class ChatStorage
 
     public void SetupAutosave()
     {
-        AutoFileName = $"{GetTimeStamp()} {Plugin.ClientState.LocalPlayer?.Name.ToString() ?? "No Character"}";
+        AutoFileName = $"{GetTimeStamp()} {Plugin.PlayerState.CharacterName}";
     }
 
     public void AutoSave()
