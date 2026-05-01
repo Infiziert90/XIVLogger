@@ -14,10 +14,10 @@ public partial class ConfigWindow
         ImGui.TextUnformatted(Language.TabChatTypesTooltip);
         foreach (var type in ChatTypeExtensions.PossibleTypes)
         {
-            var enabled = Plugin.Configuration.defaultConfig.TypeConfig[(int)type];
+            var enabled = Plugin.Configuration.NewDefaultConfig.TypeConfig[type];
             if (ImGui.Checkbox(type.ToFullName(), ref enabled))
             {
-                Plugin.Configuration.defaultConfig.TypeConfig[(int)type] = enabled;
+                Plugin.Configuration.NewDefaultConfig.TypeConfig[type] = enabled;
                 Plugin.Configuration.Save();
             }
         }

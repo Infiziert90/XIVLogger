@@ -7,7 +7,7 @@ namespace XIVLogger.Windows;
 public class NewConfigWindow : Window, IDisposable
 {
     private readonly Plugin Plugin;
-    public ChatConfig? SelectedConfig = null;
+    public ChatConfigV2? SelectedConfig = null;
 
     public NewConfigWindow(Plugin plugin) : base("New Configuration##XIVLogger")
     {
@@ -36,7 +36,7 @@ public class NewConfigWindow : Window, IDisposable
         ImGui.AlignTextToFramePadding();
         ImGui.TextUnformatted(Language.NewConfigName);
         ImGui.SameLine();
-        ImGui.InputText("##confname", ref SelectedConfig.name, 256);
+        ImGui.InputText("##confname", ref SelectedConfig.Name, 256);
         ImGui.Spacing();
 
         using var tabBar = ImRaii.TabBar("##IndieTabs");
@@ -49,10 +49,10 @@ public class NewConfigWindow : Window, IDisposable
 
         foreach (var type in ChatTypeExtensions.PossibleTypes)
         {
-            var enabled = SelectedConfig.TypeConfig[(int)type];
+            var enabled = SelectedConfig.TypeConfig[type];
             if (ImGui.Checkbox(type.ToFullName(), ref enabled))
             {
-                SelectedConfig.TypeConfig[(int)type] = enabled;
+                SelectedConfig.TypeConfig[type] = enabled;
                 Plugin.Configuration.Save();
             }
         }

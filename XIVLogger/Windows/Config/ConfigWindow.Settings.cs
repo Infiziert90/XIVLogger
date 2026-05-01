@@ -20,12 +20,12 @@ public partial class ConfigWindow
         ImGui.AlignTextToFramePadding();
         ImGui.TextUnformatted(longText);
         ImGui.SameLine(width);
-        ImGui.InputText("##filename", ref Plugin.Configuration.fileName, 256);
+        ImGui.InputText("##filename", ref Plugin.Configuration.FileNameV2, 256);
 
         ImGui.AlignTextToFramePadding();
         ImGui.TextUnformatted(Language.TabSettingsFilePath);
         ImGui.SameLine(width);
-        ImGui.InputText("##filepath", ref Plugin.Configuration.filePath, 256);
+        ImGui.InputText("##filepath", ref Plugin.Configuration.FilePathV2, 256);
         ImGui.TextUnformatted(Language.TabSettingsPathTooltip);
 
         ImGuiHelpers.ScaledDummy(5.0f);
@@ -35,26 +35,26 @@ public partial class ConfigWindow
         save |= ImGui.Checkbox(Language.TabSettingsIgnoreChatTypes, ref Plugin.Configuration.StoreEveryMessage);
         ImGuiComponents.HelpMarker(Language.TabSettingsIgnoreChatTypesTooltip);
 
-        save |= ImGui.Checkbox(Language.TabSettingsTimestamp, ref Plugin.Configuration.fTimestamp);
-        if (Plugin.Configuration.fTimestamp)
+        save |= ImGui.Checkbox(Language.TabSettingsTimestamp, ref Plugin.Configuration.Timestamp);
+        if (Plugin.Configuration.Timestamp)
         {
             using var indent = ImRaii.PushIndent(10.0f);
-            save |= ImGui.Checkbox(Language.TabSettingsUse24h, ref Plugin.Configuration.f24hTimestamp);
-            if (Plugin.Configuration.f24hTimestamp)
+            save |= ImGui.Checkbox(Language.TabSettingsUse24h, ref Plugin.Configuration.Timestamp24H);
+            if (Plugin.Configuration.Timestamp24H)
             {
                 using var innerIndent = ImRaii.PushIndent(10.0f);
-                save |= ImGui.Checkbox(Language.TabSettingsShowSeconds, ref Plugin.Configuration.fTimeSeconds);
+                save |= ImGui.Checkbox(Language.TabSettingsShowSeconds, ref Plugin.Configuration.TimeSeconds);
             }
-            save |= ImGui.Checkbox(Language.TabSettingsIncludeTimestamp, ref Plugin.Configuration.fDatestamp);
+            save |= ImGui.Checkbox(Language.TabSettingsIncludeTimestamp, ref Plugin.Configuration.Datestamp);
         }
 
-        save |= ImGui.Checkbox(Language.TabSettingsSortableFilenames, ref Plugin.Configuration.fileSortableDatetime);
+        save |= ImGui.Checkbox(Language.TabSettingsSortableFilenames, ref Plugin.Configuration.FileSortableDatetime);
 
         ImGuiHelpers.ScaledDummy(5.0f);
         ImGui.Separator();
         ImGuiHelpers.ScaledDummy(5.0f);
 
-        if (ImGui.Checkbox(Language.TabSettingsAutosave, ref Plugin.Configuration.fAutosave))
+        if (ImGui.Checkbox(Language.TabSettingsAutosave, ref Plugin.Configuration.Autosave))
         {
             Plugin.ChatLog.SetupAutosave();
             Plugin.ChatLog.AutoSave();
@@ -62,17 +62,17 @@ public partial class ConfigWindow
             Plugin.Configuration.UpdateAutosaveTime();
             Plugin.Configuration.Save();
         }
-        save |= ImGui.Checkbox(Language.TabSettingsAutosaveNotification, ref Plugin.Configuration.fAutosaveNotif);
+        save |= ImGui.Checkbox(Language.TabSettingsAutosaveNotification, ref Plugin.Configuration.AutosaveNotif);
 
         ImGui.AlignTextToFramePadding();
         ImGui.TextUnformatted(Language.TabSettingsEvery);
         ImGui.SameLine();
 
-        var currentAutoMin = Plugin.Configuration.fAutoMin;
+        var currentAutoMin = Plugin.Configuration.AutoMin;
         ImGui.InputInt("##autosavemin", ref currentAutoMin, 1);
-        if (currentAutoMin != Plugin.Configuration.fAutoMin)
+        if (currentAutoMin != Plugin.Configuration.AutoMin)
         {
-            Plugin.Configuration.fAutoMin = Math.Clamp(currentAutoMin, 1, int.MaxValue);
+            Plugin.Configuration.AutoMin = Math.Clamp(currentAutoMin, 1, int.MaxValue);
             Plugin.Configuration.Save();
         }
 
@@ -83,7 +83,7 @@ public partial class ConfigWindow
         ImGui.AlignTextToFramePadding();
         ImGui.TextUnformatted(Language.TabSettingsAutosavePath);
         ImGui.SameLine();
-        ImGui.InputText("##autofilepath", ref Plugin.Configuration.autoFilePath, 256);
+        ImGui.InputText("##autofilepath", ref Plugin.Configuration.AutoFilePathV2, 256);
 
         if (save)
         {

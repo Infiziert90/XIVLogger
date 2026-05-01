@@ -393,15 +393,6 @@ namespace XIVLogger.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Other /random.
-        /// </summary>
-        internal static string FullNameOtherRandom {
-            get {
-                return ResourceManager.GetString("FullNameOtherRandom", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Tell Outgoing.
         /// </summary>
         internal static string FullNameOutTell {
@@ -425,6 +416,15 @@ namespace XIVLogger.Resources {
         internal static string FullNamePvP {
             get {
                 return ResourceManager.GetString("FullNamePvP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random Number.
+        /// </summary>
+        internal static string FullNameRandom {
+            get {
+                return ResourceManager.GetString("FullNameRandom", resourceCulture);
             }
         }
         
@@ -470,15 +470,6 @@ namespace XIVLogger.Resources {
         internal static string FullNameYell {
             get {
                 return ResourceManager.GetString("FullNameYell", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Your /random.
-        /// </summary>
-        internal static string FullNameYourRandom {
-            get {
-                return ResourceManager.GetString("FullNameYourRandom", resourceCulture);
             }
         }
         

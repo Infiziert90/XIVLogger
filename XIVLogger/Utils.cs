@@ -56,10 +56,7 @@ public static class Utils
             XivChatType.TellOutgoing => Language.FullNameOutTell,
             XivChatType.CustomEmote => Language.FullNameCustomEmote,
             XivChatType.StandardEmote => Language.FullNameEmote,
-
-            (XivChatType) 2122 => Language.FullNameYourRandom,
-            (XivChatType) 8266 => Language.FullNameOtherRandom,
-
+            XivChatType.RandomNumber => Language.FullNameRandom,
             XivChatType.CrossLinkShell1 => $"{Language.FullNameCWLS} 1",
             XivChatType.CrossLinkShell2 => $"{Language.FullNameCWLS} 2",
             XivChatType.CrossLinkShell3 => $"{Language.FullNameCWLS} 3",

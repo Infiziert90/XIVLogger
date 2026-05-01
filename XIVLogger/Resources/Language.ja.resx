@@ -83,11 +83,8 @@
   <data name="FullNameEmote" xml:space="preserve">
         <value>標準のエモート</value>
     </data>
-  <data name="FullNameYourRandom" xml:space="preserve">
-        <value>あなたの/ランダム</value>
-    </data>
-  <data name="FullNameOtherRandom" xml:space="preserve">
-        <value>その他/ランダム</value>
+  <data name="FullNameRandom" xml:space="preserve">
+        <value>Random Number</value>
     </data>
   <data name="FullNameCWLS" xml:space="preserve">
         <value>クロスリンクシェル</value>

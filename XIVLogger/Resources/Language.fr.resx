@@ -83,14 +83,11 @@
   <data name="FullNameEmote" xml:space="preserve">
         <value>Emotes standards</value>
     </data>
-  <data name="FullNameYourRandom" xml:space="preserve">
-        <value>Votre /random</value>
-    </data>
-  <data name="FullNameOtherRandom" xml:space="preserve">
-        <value>/random des autres</value>
+  <data name="FullNameRandom" xml:space="preserve">
+        <value>Random Number</value>
     </data>
   <data name="FullNameCWLS" xml:space="preserve">
-        <value>Cross Linkshell</value>
+        <value>Linkshell inter-Monde</value>
     </data>
   <data name="FullNameLS" xml:space="preserve">
         <value>Linkshell</value>

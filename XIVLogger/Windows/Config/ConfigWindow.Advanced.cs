@@ -36,13 +36,13 @@ public partial class ConfigWindow
         ImGui.TableNextRow();
 
         ImGui.TableNextColumn();
-        if (ImGui.Button($"{(Plugin.Configuration.defaultConfig.IsActive ? "@" : "")}##active_default", ImGuiHelpers.ScaledVector2(20.0f)))
-            Plugin.Configuration.SetActiveConfig(Plugin.Configuration.defaultConfig);
+        if (ImGui.Button($"{(Plugin.Configuration.NewDefaultConfig.IsActive ? "@" : "")}##active_default", ImGuiHelpers.ScaledVector2(20.0f)))
+            Plugin.Configuration.SetActiveConfig(Plugin.Configuration.NewDefaultConfig);
 
         ImGui.TableNextColumn();
-        ImGui.TextUnformatted(Plugin.Configuration.defaultConfig.Name);
+        ImGui.TextUnformatted(Plugin.Configuration.NewDefaultConfig.Name);
 
-        foreach (var (config, idx) in Plugin.Configuration.configList.ToArray().WithIndex())
+        foreach (var (config, idx) in Plugin.Configuration.ImprovedConfigList.ToArray().WithIndex())
         {
             var id = $"{config.Name}{idx}";
 

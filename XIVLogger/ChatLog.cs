@@ -60,7 +60,7 @@ public class ChatStorage
 
     private string GetTimeStamp()
     {
-        return DateTime.Now.ToString(Config.fileSortableDatetime ? SortableDatetimeFormat : LegacyDatetimeFormat, System.Globalization.CultureInfo.InvariantCulture);
+        return DateTime.Now.ToString(Config.FileSortableDatetime ? SortableDatetimeFormat : LegacyDatetimeFormat, System.Globalization.CultureInfo.InvariantCulture);
     }
 
     private static bool CheckValidPath(string path)
@@ -82,7 +82,7 @@ public class ChatStorage
         if (!string.IsNullOrEmpty(args))
             int.TryParse(args, out lastN);
 
-        var printedLog = PrepareLog(aLastN: lastN, aTimestamp: Config.fTimestamp, aTimeSeconds: Config.fTimeSeconds, a24hTimestamp: Config.f24hTimestamp, aDatestamp: Config.fDatestamp);
+        var printedLog = PrepareLog(aLastN: lastN, aTimestamp: Config.Timestamp, aTimeSeconds: Config.TimeSeconds, a24hTimestamp: Config.Timestamp24H, aDatestamp: Config.Datestamp);
 
         if (aClipboard)
         {
@@ -115,12 +115,12 @@ public class ChatStorage
         }
 
         var name = GetTimeStamp();
-        var folder = !CheckValidPath(Config.filePath)
+        var folder = !CheckValidPath(Config.FilePathV2)
             ? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-            : Config.filePath;
+            : Config.FilePathV2;
 
-        if (!string.IsNullOrEmpty(Config.fileName) && !string.IsNullOrWhiteSpace(Config.fileName))
-            name = ReplaceInvalidChars(Config.fileName);
+        if (!string.IsNullOrEmpty(Config.FileNameV2) && !string.IsNullOrWhiteSpace(Config.FileNameV2))
+            name = ReplaceInvalidChars(Config.FileNameV2);
 
         var path = $@"{folder}\{name}.txt";
         var count = 0;
@@ -145,12 +145,12 @@ public class ChatStorage
 
     private List<string> PrepareLog(int aLastN = 0, bool aTimestamp = false, bool aTimeSeconds = false, bool a24hTimestamp = false, bool aDatestamp = false, bool auto = false)
     {
-        var activeConfig = Config.activeConfig;
+        var activeConfig = Config.NewActiveConfig;
         var result = new List<string>();
 
         foreach (var message in LogList)
         {
-            activeConfig.TypeConfig.TryGetValue((int)message.Type, out var ok);
+            activeConfig.TypeConfig.TryGetValue(message.Type, out var ok);
             if (!ok && !Config.StoreEveryMessage)
                 continue;
 
@@ -200,13 +200,13 @@ public class ChatStorage
 
     public void AutoSave()
     {
-        if (!Config.fAutosave)
+        if (!Config.Autosave)
             return;
 
-        var printedLog = PrepareLog(aLastN: 0, aTimestamp: Config.fTimestamp, aTimeSeconds: Config.fTimeSeconds, a24hTimestamp: Config.f24hTimestamp, aDatestamp: Config.fDatestamp, true);
-        var folder = !CheckValidPath(Config.autoFilePath)
+        var printedLog = PrepareLog(aLastN: 0, aTimestamp: Config.Timestamp, aTimeSeconds: Config.TimeSeconds, a24hTimestamp: Config.Timestamp24H, aDatestamp: Config.Datestamp, true);
+        var folder = !CheckValidPath(Config.AutoFilePathV2)
             ? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-            : Config.autoFilePath;
+            : Config.AutoFilePathV2;
 
         if (printedLog.Count == 0)
             return;
@@ -217,7 +217,7 @@ public class ChatStorage
         foreach (var message in printedLog)
             file.WriteLine(message);
 
-        if (Config.fAutosaveNotif)
+        if (Config.AutosaveNotif)
             Plugin.Chat.Print(new XivChatEntry { Message = string.Format(Language.ChatMessageAutosave, path), Type = XivChatType.Echo });
     }
 }

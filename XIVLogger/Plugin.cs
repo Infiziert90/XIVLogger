@@ -1,7 +1,6 @@
 ﻿using System.Globalization;
+using Dalamud.Game.Chat;
 using Dalamud.Game.Command;
-using Dalamud.Game.Text;
-using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Plugin;
 using Dalamud.Interface.Windowing;
 using Dalamud.IoC;
@@ -37,6 +36,13 @@ public class Plugin : IDalamudPlugin
         Configuration = PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
         Configuration.Initialize();
 
+        if (Configuration.Version < 2)
+        {
+            Configuration.Version = 2;
+            Configuration.Migrate();
+            Configuration.Save();
+        }
+
         LanguageChanged(PluginInterface.UiLanguage);
 
         ConfigWindow = new ConfigWindow(this);
@@ -66,7 +72,7 @@ public class Plugin : IDalamudPlugin
 
         ClientState.Login += OnLogin;
         ClientState.Logout += OnLogout;
-        Chat.ChatMessage += OnChatMessage;
+        Chat.ChatMessageUnhandled += OnChatMessage;
         PluginInterface.LanguageChanged += LanguageChanged;
 
         Framework.Update += OnUpdate;
@@ -102,7 +108,7 @@ public class Plugin : IDalamudPlugin
 
     private void OnLogout(int _, int __)
     {
-        if (!Configuration.fAutosave)
+        if (!Configuration.Autosave)
             return;
 
         ChatLog.AutoSave();
@@ -111,7 +117,7 @@ public class Plugin : IDalamudPlugin
 
     private void OnUpdate(IFramework framework)
     {
-        if (!Configuration.fAutosave)
+        if (!Configuration.Autosave)
             return;
 
         if (!ClientState.IsLoggedIn)
@@ -124,9 +130,9 @@ public class Plugin : IDalamudPlugin
         Configuration.UpdateAutosaveTime();
     }
 
-    private void OnChatMessage(XivChatType type, int _, ref SeString sender, ref SeString message, ref bool handled)
+    private void OnChatMessage(IChatMessage message)
     {
-        ChatLog.AddMessage(type, sender.TextValue, message.TextValue);
+        ChatLog.AddMessage(message.LogKind, message.Sender.TextValue, message.Message.TextValue);
     }
 
     private void OnCommand(string command, string args)
